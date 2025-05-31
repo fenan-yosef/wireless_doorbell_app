@@ -1,6 +1,12 @@
-import 'package:flutter/material.dart';
+import 'dart:async'; // Added for StreamSubscription
 
-void main() {
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart'; // Added firebase_core import
+import 'package:cloud_firestore/cloud_firestore.dart'; // Added cloud_firestore import
+
+void main() async { // Made main async
+  WidgetsFlutterBinding.ensureInitialized(); // Ensured widgets are initialized
+  await Firebase.initializeApp(); // Initialized Firebase
   runApp(const MyApp());
 }
 
@@ -56,6 +62,33 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  StreamSubscription? _subscription; // Added for Firestore listener
+
+  @override
+  void initState() {
+    super.initState();
+    _subscription = FirebaseFirestore.instance
+        .collection('doorbellEvents')
+        .snapshots()
+        .listen((snapshot) {
+      for (var change in snapshot.docChanges) {
+        if (change.type == DocumentChangeType.added) {
+          print('New doorbell event: ${change.doc.data()}'); // Log to console
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('New doorbell event! Timestamp: ${change.doc.data()?['timestamp'] ?? 'N/A'}'),
+            ),
+          );
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel(); // Cancel subscription
+    super.dispose();
+  }
 
   void _incrementCounter() {
     setState(() {
