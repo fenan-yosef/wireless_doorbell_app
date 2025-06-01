@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:696036947396:android:4511e502b1ffe73e582091",
+        "android_client_info": {
+          "package_name": "com.wireless_doorbell_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQ3zcr4MLjs14nU_flUpVL905aQokgR1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:696036947396:android:e8383b1fd2129f22582091",
         "android_client_info": {
           "package_name": "com.wireless_doorbell_app.astu"

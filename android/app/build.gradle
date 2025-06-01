@@ -11,6 +11,7 @@ android {
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
+        coreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -24,7 +25,7 @@ android {
         applicationId = "com.wireless_doorbell_app"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        minSdk = 23 // Ensure minSdk is at least 21 for Firestore, or adjust as needed.
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -41,6 +42,14 @@ android {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    implementation(platform("com.google.firebase:firebase-bom:33.1.1")) // Use a recent BOM version
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-firestore-ktx") // Use -ktx for Kotlin extensions
+    // If you had firebase-messaging, you would remove it if not using FCM push notifications.
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4") // Add this line
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -17,7 +17,15 @@ tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
 buildscript {
+    ext.kotlin_version = '2.1.21' // Or your project's Kotlin version
+    repositories {
+        google()
+        mavenCentral()
+    }
     dependencies {
         classpath 'com.google.gms:google-services:4.4.0'
+        classpath 'com.android.tools.build:gradle:8.2.1' // Ensure this line is present and correct
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version" // Ensure this is compatible
+
     }
 }
